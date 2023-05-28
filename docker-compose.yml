@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+    networks:
+       - mongo
+    volumes:
+      - database:/data/mongo
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    networks:
+      - redis
+    env_file:
+      - .env
+
+volumes:
+  database:
+
+networks:
+  mongo:
+  redis:

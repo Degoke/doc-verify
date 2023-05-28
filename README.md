@@ -1,6 +1,6 @@
 # Document Analysis and Image Comparison Application
 
-This application, written in GoLang, takes input fields, a selfie, and a picture of a document and uses AWS services to compare the text in the document image to the input values and compare the image in the document to the selfie.
+This application, written in GoLang, takes input fields, a selfie, and a picture of a document and uses ML services to analyse and compare the text in the document image to the input values and  the image in the document to the selfie.
 
 ## Features
 

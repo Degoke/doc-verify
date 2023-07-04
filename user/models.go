@@ -18,6 +18,7 @@ type UserModel struct {
 	ID primitive.ObjectID `bson:"_id"`
 	Email string `bson:"email"`
 	Password string `bson:"password"`
+	Key string `bson:"key"`
 	CreatedAt time.Time `bson:"created_at"`
 	UpdatedAt time.Time `bson:"updated_at"`
 }

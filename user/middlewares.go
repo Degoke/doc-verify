@@ -36,7 +36,7 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 
 		if err != nil {
 			if auto401 {
-				c.AbortWithError(http.StatusUnauthorized, err)
+				c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 			}
 			return
 		}
@@ -46,7 +46,7 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 			userId, err := primitive.ObjectIDFromHex(stringId)
 			if err != nil {
 				if auto401 {
-					c.AbortWithError(http.StatusUnauthorized, err)
+					c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 				}
 				return
 			}
@@ -54,7 +54,7 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 			UpdateContextUserModel(c, userId)
 		} else {
 			if auto401 {
-				c.AbortWithError(http.StatusUnauthorized, err)
+				c.AbortWithStatusJSON(http.StatusUnauthorized, err)
 			}
 			return
 		}

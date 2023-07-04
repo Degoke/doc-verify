@@ -28,12 +28,10 @@ func mainRouter() http.Handler {
 
 	v1 := e.Group("/api/v1")
 
-	user.UsersRouter(v1.Group("/users"))
 	user.UserRouter(v1.Group("/user"))
 
 	v1.Use(user.AuthMiddleware(true))
 	verification.VerificationRouter(v1.Group("/verification"))
-	verification.VerificationsRouter(v1.Group("/verifications"))
 
 	return e
 }

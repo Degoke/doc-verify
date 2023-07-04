@@ -57,10 +57,8 @@ func LoginUserHandler(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, gin.H{"success": false, "error": "user does not exist"})
 			return
 		} else {
-			if err != mongo.ErrNoDocuments {
 				c.JSON(http.StatusBadRequest, gin.H{"success": false, "error": err.Error()})
 				return
-			}
 		}
 	}
 
@@ -87,6 +85,26 @@ func GetUsersHandler(c *gin.Context) {
 	}
 
 	serializer := UsersSerializer{users}
+
+	c.JSON(http.StatusOK, gin.H{"success": true, "data": serializer.Response()})
+}
+
+func GetUserHandler(c *gin.Context) {
+	userId := c.MustGet("userId");
+	if userId == primitive.NilObjectID {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	filter := bson.D{{Key: "_id", Value: userId}}
+	user, err := FindOneUser(&filter)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"success": false, "error": err.Error()})
+		return
+	}
+
+	serializer := UserSerializer{user}
 
 	c.JSON(http.StatusOK, gin.H{"success": true, "data": serializer.Response()})
 }
